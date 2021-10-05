@@ -13,14 +13,28 @@
       <button onclick="diffuculty(8,12)">MEDIUM</button>
       <button onclick="diffuculty(12,30)">HARD</button>
     </div>
-    <div class="smiley" onclick="init()">😀</div>
-    <div class="time">timer: <span class="timer">0 : 0</span></div>
+    
+    <div class="time">Timer: <span class="timer">0 : 0</span></div>
+
+    
+    <div class="modal-message"></div>
     <div class="modal"></div>
+    <div class="modal-bestscore">   </div>
+    <div class="smiley" onclick="init()">😀</div>
+    
     <div class="board-container"></div>
-    <div>lives: <span class="lives">3</span></div>
+    <div class="lives-modal">Lives:  <span class="lives">3</span></div>
     <div>
-      <button class="hints" onclick="getHint()">HINT </button>
+      
+      <button class="hints" onclick="getHint()">HINT </button> 
+      <div class="hints-counter"></div>
     </div>
+    <div class="safe">
+    <button class="safe-click" onclick="safeClick()"> Safe Click</button>
+    </div>
+    <div class="safe-amount"> </div>
+    
+    <!-- <button class="manualy" onclick="manually()"> Manually plant mines</button> -->
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>
   </body>

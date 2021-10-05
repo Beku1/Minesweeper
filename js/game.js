@@ -4,6 +4,7 @@ var gIsHint = false
 var gTimeInterval
 var gButtonPressed
 var gStartTime
+var gIsManually = false
 const MINE = '💥'
 const MARK = '🚩'
 
@@ -20,46 +21,56 @@ var gGame = {
   isFirstMove: true,
   livesCount: 2,
   hintsLeft: 3,
+  safeClicks:3 ,
 }
 
 function init() {
+  var elScore = document.querySelector(".modal-bestscore")
+  elScore.innerText = ''
   var elSmiley = document.querySelector('.smiley')
   elSmiley.innerText = '😀'
   restartGame()
   gBoard = buildBoard()
   renderBoard(gBoard)
+  
 }
 
 function restartGame() {
+  // var elScore = document.querySelector(".modal-bestscore")
   gGame.markedCount = 0
   gGame.shownCount = 0
   gGame.isFirstMove = true
   gGame.isOn = false
-  if (gLevel.MINES > 3) gGame.livesCount = 100
+  if (gLevel.MINES > 3) gGame.livesCount = 3
   else gGame.livesCount = 2
   gGame.hintsLeft = 3
-
+  gGame.secsPassed = 0
+  gGame.safeClicks=3
+  // elScore.innerText = 'great '
   clearInterval(gTimeInterval)
-  var elLives = document.querySelector('.lives')
-  elLives.innerText = gGame.livesCount
+  elTextUpdate()
+
 }
+
 
 function setTimer() {
   var currTime = Date.now()
   var newTime = new Date(currTime - gStartTime)
   var elTimer = document.querySelector('.timer')
   var timer = newTime.getMinutes() + ' : ' + newTime.getSeconds()
-  // console.log(printTime)
+  gGame.secsPassed++
   elTimer.innerText = timer
 }
 
 function checkGameOver() {
+  
   var elSmiley = document.querySelector('.smiley')
   var shownTarget = gLevel.SIZE ** 2 - gLevel.MINES
   if (gGame.markedCount === gLevel.MINES && gGame.shownCount === shownTarget) {
     clearInterval(gTimeInterval)
     gGame.isOn = false
     elSmiley.innerText = '😎'
+    bestScore(gGame.secsPassed)
     console.log('you WIN')
   } else if (gGame.livesCount === 0) {
     clearInterval(gTimeInterval)
@@ -73,8 +84,11 @@ function checkGameOver() {
 function getHint() {
   if(gGame.hintsLeft>0){
   gIsHint = true
-  
   }
+}
+
+function manually(){
+
 }
 
 function revealBoard() {
@@ -91,4 +105,32 @@ function diffuculty(size, mines) {
   gLevel.MINES = mines
   gLevel.SIZE = size
   init()
+}
+
+function safeClick(){
+  if(gGame.safeClicks>0){
+  var safeCells = findSafeCells()
+  var randomIdx = getRandomIntInt(0,safeCells.length-1)
+  var safeCellI = safeCells[randomIdx].i
+  var safeCellJ = safeCells[randomIdx].j
+  
+  var elCellNew = document.querySelector(`.cell${safeCellI}-${safeCellJ}`)
+ 
+  elCellNew.classList.add('safe-cell')
+  
+  setTimeout(function(){elCellNew.classList.remove('safe-cell')} ,3000)
+  gGame.safeClicks--
+  }
+  elTextUpdate()
+
+
+}
+
+
+
+function bestScore(timeSec){
+  var elScore = document.querySelector(".modal-bestscore")
+  localStorage.setItem(`Best time (Level ${gLevel.SIZE/4})`,  timeSec);
+  
+  elScore.innerText ='Great job!! You finnished in :'+timeSec +' second!! ';
 }
