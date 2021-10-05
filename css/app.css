@@ -80,16 +80,71 @@ h2{
   background-color: cornflowerblue;
 } */ 
 
-
+/* 
 table, td {
   border: 2px solid rgb(103, 131, 150);
+} */
+
+body{
+  background: url(../img/background_img.png);
+  width:100vw;
+  height:auto;
+  box-sizing:border-box;
+  background-repeat: no-repeat;
+  position:center;
 }
 
+
+/* .time{
+  margin:0 auto;
+  
+}
+
+.diffuculty{
+  margin:0 auto;
+}
+  */
+
+/* .board-container{
+  margin-left: auto;
+  margin-right: auto;
+} */
 
 table{
+  margin:0 auto;
+  border-collapse: collapse; 
+  
+ } 
 
-  border-collapse: collapse;
+ td{
+  border:2px solid rgba(255, 251, 0, 0.603);
+  cursor: pointer;
+  /* object-fit: cover; */
+  text-align: center;
+  
+  height: 35px;
+  width: 35px;
+  position: relative;
+ 
+  background-color: rgba(4, 25, 216, 0.78);
 }
-td{
-  padding: 20px;
+
+td .cell{
+  position:absolute;
 }
+
+td:hover{
+  background-color:rgba(165, 13, 63, 0.91);
+  transition:0.5s;
+ 
+} 
+/* 
+.smiley{
+  
+  text-align: center;
+  width:30px;
+  
+  height: 30px;
+  background-color:black;
+} */
+

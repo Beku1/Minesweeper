@@ -8,10 +8,19 @@
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body onload="init()" >
-    <div class="timer">Time</div>
+    <div class="diffuculty">
+      <button onclick="diffuculty(4,2)">EASY</button>
+      <button onclick="diffuculty(8,12)">MEDIUM</button>
+      <button onclick="diffuculty(12,30)">HARD</button>
+    </div>
+    <div class="smiley" onclick="init()">😀</div>
+    <div class="time">timer: <span class="timer">0 : 0</span></div>
     <div class="modal"></div>
     <div class="board-container"></div>
-
+    <div>lives: <span class="lives">3</span></div>
+    <div>
+      <button class="hints" onclick="getHint()">HINT </button>
+    </div>
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>
   </body>
