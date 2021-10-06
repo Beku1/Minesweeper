@@ -216,7 +216,7 @@ function findSafeCells() {
         safeCells.push({ i:i, j:j })
     }
   }
-  return wCells
+  return safeCells
 }
 
 function renderCell(cellI, cellJ, value, evKey) {
