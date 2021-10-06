@@ -5,6 +5,7 @@ var gTimeInterval
 var gButtonPressed
 var gStartTime
 var gIsManually = false
+var gManuallyMines = 0
 const MINE = '💥'
 const MARK = '🚩'
 
@@ -22,9 +23,13 @@ var gGame = {
   livesCount: 2,
   hintsLeft: 3,
   safeClicks:3 ,
+  
 }
 
 function init() {
+  if(gLevel.SIZE===4)fixedDiff(4,2)
+  if(gLevel.SIZE===8)fixedDiff(8,12)
+  if(gLevel.SIZE===12)fixedDiff(12,30)
   var elScore = document.querySelector(".modal-bestscore")
   elScore.innerText = ''
   var elSmiley = document.querySelector('.smiley')
@@ -88,7 +93,7 @@ function getHint() {
 }
 
 function manually(){
-
+if(!gGame.isOn) gIsManually = true
 }
 
 function revealBoard() {
@@ -99,6 +104,12 @@ function revealBoard() {
       }
     }
   }
+}
+
+function fixedDiff(size, mines) {
+  gLevel.MINES = mines
+  gLevel.SIZE = size
+  
 }
 
 function diffuculty(size, mines) {

@@ -23,8 +23,14 @@ function renderBoard(board) {
 }
 
 function cellClicked(elCell, cellI, cellJ, ev = null) {
+  // if(gIsManually){
+  //   if(gManuallyMines===gLevel.MINES) return
+  //   gBoard[cellI][cellJ]===MINE
+  //   gManuallyMines++
+  //   return
+  // }
   if (!gGame.isOn && !gGame.isFirstMove) return
-  if (gIsHint) {
+  if (gIsHint&&!gIsManually) {
     giveHint(cellI, cellJ, elCell)
     return
   }
@@ -148,28 +154,7 @@ function cleanClicked(i, j) {
   elCellNew.classList.remove('clicked')
 }
 
-// setTimeout(closeHints,1000 , cellI,cellJ,elCell,shownCells)
-// gIsHint = false
-// }
 
-// function closeHints(cellI,cellJ,elCell,idxCells){
-//   var cellIdx = 0
-//   for (var i = cellI - 1; i <= cellI + 1; i++) {
-//     if(i<0 || i >= gBoard.length) continue
-//    for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-
-//      if (j < 0 || j >= gBoard.length) continue
-//      cellIdx++
-
-//      if(idxCells.includes(cellIdx))continue
-//      else {
-//        gBoard[i][j].isShown = false
-//        renderCell(cellI,cellJ,'')
-//      }
-// }
-//   }
-//   gIsHint = false
-// }
 
 function renderHint(cellI, cellJ) {
   var elCell = document.querySelector(`.cell${cellI}-${cellJ}`)
@@ -201,7 +186,6 @@ function elTextUpdate() {
 }
 
 function expand(board, cellI, cellJ, elCell) {
-  // debugger
   for (var i = cellI - 1; i <= cellI + 1; i++) {
     if (i < 0 || i > board.length - 1) continue
     for (var j = cellJ - 1; j <= cellJ + 1; j++) {
@@ -232,7 +216,7 @@ function findSafeCells() {
         safeCells.push({ i:i, j:j })
     }
   }
-  return safeCells
+  return wCells
 }
 
 function renderCell(cellI, cellJ, value, evKey) {
