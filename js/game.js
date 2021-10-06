@@ -71,7 +71,8 @@ function checkGameOver() {
   
   var elSmiley = document.querySelector('.smiley')
   var shownTarget = gLevel.SIZE ** 2 - gLevel.MINES
-  if (gGame.markedCount === gLevel.MINES && gGame.shownCount === shownTarget) {
+  if (gGame.markedCount === gLevel.MINES && gGame.shownCount === shownTarget&&gGame.livesCount>0) {
+    
     clearInterval(gTimeInterval)
     gGame.isOn = false
     elSmiley.innerText = '😎'
