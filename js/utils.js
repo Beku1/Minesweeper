@@ -47,12 +47,13 @@ function cellClicked(elCell, cellI, cellJ, ev = null) {
   if (ev === 0 || ev === 2 || ev > 3) return
   if (ev === 3) var isRightClick = true
   if (ev === 1) var isRightClick = false
-
-  if (isRightClick) {
+   // This is doing the right click function
+     if (isRightClick) {
     if (gGame.isFirstMove) {
       startGame(cellI, cellJ)
       cellMarked(elCell, cellI, cellJ)
     } else cellMarked(elCell, cellI, cellJ)
+    // this is doing the left click function
   } else if (!isRightClick && !gBoard[cellI][cellJ].isMarked) {
     if (gGame.isFirstMove) {
       startGame(cellI, cellJ)
@@ -190,19 +191,19 @@ function expand(board, cellI, cellJ, elCell) {
     if (i < 0 || i > board.length - 1) continue
     for (var j = cellJ - 1; j <= cellJ + 1; j++) {
       if (j < 0 || j > board[cellI].length - 1) continue
-
-      // cellClicked(elCell,i,j,1)
-      //  if (gBoard[i][j].minesAroundCount === 0&&!gBoard[i][j].isShown){
-      //    expand(board,i,j,elCell)
-      //  }
-      //  }
-      // if(gBoard[i][j].minesAroundCount===0){
-      //   expand(board,i,j,elCell)
-      //   return
-      // }
+         
+  
       if (gBoard[i][j].isMarked) continue
       if (gBoard[i][j].isMine) continue
-      renderCell(i, j, gBoard[i][j].minesAroundCount, 1)
+      
+        //recursion 
+       if(gBoard[i][j].minesAroundCount===0&&!gBoard[i][j].isShown) {
+        gBoard[i][j].isShown=true
+        gGame.shownCount++
+       expand(board,i,j, elCell) 
+       }
+       renderCell(i, j, gBoard[i][j].minesAroundCount, 1)
+     
     }
   }
 }
@@ -269,17 +270,7 @@ function setMinesNegsCount(board) {
   return board
 }
 
-// function setMinesNegsCount(board, cellI, cellJ) {
 
-//   for (var i = cellI - 1; i <= cellI + 1; i++) {
-//     if (i < 0 || i >= board.length) continue
-//     for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-//       if (i === cellI && j === cellJ) continue
-//       if (j < 0 || j >= board[i].length) continue
-//       if (board[i][j].isMine) board[cellI][cellJ].minesAroundCount++
-//     }
-//   }
-// }
 
 function generateMines(cellI, cellJ) {
   var minesCount = 0
@@ -316,30 +307,3 @@ function countNeighbors(board, cellI, cellJ) {
   }
   return neighborsSum
 }
-
-// function cellClicked(elCell, cellI, cellJ, ev = null) {
-//   if (ev === 0 || ev === 2 || ev > 3) return
-//   if (ev === 3) var isRightClick = true
-//   if (ev === 1) var isRightClick = false
-
-//   if (isRightClick) {
-//     if (!gGame.isOn) {
-//       generateMines(cellI, cellJ)
-//       gStartTime = Date.now()
-//       gTimeInterval = setInterval(setTimer, 1000)
-//       gGame.isOn = true
-//       gBoard[cellI][cellJ].isMarked = true
-//       renderCell(cellI, cellJ, MARK)
-//     } else if (!gBoard[cellI][cellJ].isShown) {
-//       if (gBoard[cellI][cellJ].isMarked) {
-//         gBoard[cellI][cellJ].isMarked = false
-
-//         gGame.markedCount--
-//         renderCell(cellI, cellJ, '')
-//       } else {
-//         gGame.markedCount++
-//         gBoard[cellI][cellJ].isMarked = true
-//         renderCell(cellI, cellJ, MARK)
-//       }
-//     }
-//   }
